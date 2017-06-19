@@ -12,33 +12,33 @@ form = """
 <html>
     <head>
         <style>
-            form {
+            form {{
                 background-color: #eee;
                 padding: 20px;
                 margin: 0 auto;
                 width: 540px;
                 font: 16px sans-serif;
                 border-radius: 10px;
-            }
-            textarea {
+            }}
+            textarea {{
                 margin: 10px 0;
                 width: 540px;
                 height: 120px;
-            }
+            }}
 
-            h1 {
+            h1 {{
                 text-align: center;
-            }
+            }}
         </style>
     </head>
     <body>
         <header>
             <h1>Web Caesar</h1>
         </header>
-        <form action="/web-caesar" method="POST">
+        <form action="/" method="POST">
             <label for="rotate_by">Rotate by:</label>
             <input id="rotate_by" type="text" name="rot" value="0" />
-            <textarea id="txtArea" name="text"></textarea>
+            <textarea id="txtArea" name="text">{0}</textarea>
             <input type="submit" value='Encrypt Message!'/>
         </form>
     </body>
@@ -48,14 +48,14 @@ form = """
 
 @app.route("/")
 def index():
-    return form
+    return form.format("")
 
-@app.route("/web-caesar", methods=['POST'])
+@app.route("/", methods=['POST'])
 def encrypt():
 #Caesar cipher encryption function taking inputs 'text' and the degree of rotation
     text = request.form['text']
     rot = request.form['rot']
     jumbled_text = rotate_string(str(text), int(rot))
-    return '<h1>' + jumbled_text + '</h1>'
+    return form.format(jumbled_text)
 
 app.run()
